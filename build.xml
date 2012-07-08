@@ -1,0 +1,27 @@
+<project basedir="." default="release">
+	<property file="ant.properties"/>
+	
+	<taskdef resource="flexTasks.tasks" classpath="${FLEXTASKS_FILE}"></taskdef>
+	<!--<taskdef resource="flexUnitTasks.tasks" classpath="${FLEXUNITTASKS_FILE}"></taskdef>-->
+	
+	<target name="release">
+		<echo>Building SWC...</echo>
+		<compc output="${project.path.bin}/${project.name}.swc" >
+			<source-path path-element="${project.path.source}" />
+			<external-library-path dir="${project.path.lib}" includes="*" append="true"/>
+			<include-sources dir="${project.path.source}/binding2" includes="*" />
+		</compc>
+		<echo>Success! Created ${project.name}.swc</echo> 
+	</target>
+	
+	<target name="releaseWithDependencies">
+		<echo>Building SWC...</echo>
+		<compc output="${project.path.bin}/${project.name}-withDependencies.swc" >
+			<source-path path-element="${project.path.source}" />
+			<library-path dir="${project.path.lib}" includes="*" />
+			<include-sources dir="${project.path.source}/binding2" includes="*" />
+		</compc>
+		<echo>Success! Created ${project.name}-withDependencies.swc</echo> 
+	</target>
+	
+</project>
