@@ -2,6 +2,7 @@ package {
 	import binding2.Binding2;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * ...
@@ -17,6 +18,9 @@ package {
 		private var factor:int = 0;
 		
 		public function Main():void {
+			graphics.beginFill(0xCCCCCC);
+			graphics.drawRoundRect(0, 0, 400, 400, 20, 20);
+			graphics.endFill();
 			
 			blue = new Circle(0x0000FF);
 			addChild(blue);
@@ -26,8 +30,10 @@ package {
 			
 			Binding2.bind(blue, 'x', red, 'y');
 			Binding2.bind(blue, 'y', red, 'x');
+			Binding2.bind(blue, "alpha", red, "alpha");
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			stage.addEventListener(MouseEvent.CLICK, onClick);
 		}
 		
 		public function onEnterFrame(e:Event):void {
@@ -35,6 +41,11 @@ package {
 			blue.x = 50 * Math.sin(factor * 0.01) + 200;
 			blue.y = 50 * Math.cos(factor * 0.01) + 200;
 			factor += 1;
+		}
+		
+		private function onClick(e:MouseEvent):void {
+			blue.alpha = Math.random();
+			blue.dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 	}
